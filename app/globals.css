@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-ink: #13241f;
+  --color-moss: #1c3a32;
+  --color-glass: #e3f3ea;
+  --color-mist: #b7d4c6;
+  --color-brass: #e0a45a;
+  --color-copper: #c56a3a;
+  --color-sea: #3ecfb8;
+  --color-flare: #ff6a4a;
+  --color-paper: #f4f8f4;
+  --color-dusk: #243b55;
+  --font-sans: var(--font-outfit);
+  --font-display: var(--font-fraunces);
+  --font-mono: var(--font-ibm);
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: #13241f;
+  color: #f4f8f4;
+  font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: var(--font-fraunces), ui-serif, Georgia, serif;
+}
+
+.ticket {
+  position: relative;
+  background: linear-gradient(180deg, rgba(244, 248, 244, 0.94), rgba(227, 243, 234, 0.88));
+  color: #13241f;
+  border-radius: 28px;
+  box-shadow:
+    0 40px 90px rgba(8, 18, 16, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.ticket::before,
+.ticket::after {
+  content: "";
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background: #16332b;
+  border-radius: 50%;
+  top: 58%;
+  z-index: 2;
+}
+
+.ticket::before {
+  left: -14px;
+}
+
+.ticket::after {
+  right: -14px;
+}
+
+.ticket-perforation {
+  background-image: radial-gradient(circle at 8px 8px, #16332b 3.5px, transparent 3.7px);
+  background-size: 16px 16px;
+  background-repeat: repeat-y;
+}
+
+.sky {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  background: radial-gradient(120% 90% at 20% 10%, #6aa8a0 0%, #1c3a32 42%, #0e1c18 100%);
+}
+
+.sky[data-mood="clear"] {
+  background: radial-gradient(110% 80% at 80% 0%, #f2c888 0%, #7ec8c0 32%, #1e4a42 78%, #10241f 100%);
+}
+
+.sky[data-mood="cloud"] {
+  background: radial-gradient(100% 80% at 50% 0%, #d5e4dc 0%, #6f9188 38%, #243b36 100%);
+}
+
+.sky[data-mood="rain"] {
+  background: radial-gradient(120% 90% at 30% 0%, #6d8c99 0%, #2c4a52 45%, #101c22 100%);
+}
+
+.sky[data-mood="storm"] {
+  background: radial-gradient(90% 70% at 70% 10%, #4a5560 0%, #1b2430 50%, #07090d 100%);
+}
+
+.sky[data-mood="snow"] {
+  background: radial-gradient(100% 80% at 50% 0%, #f4f8ff 0%, #b9c7d6 40%, #3d4d5c 100%);
+}
+
+.sky[data-mood="fog"] {
+  background: radial-gradient(100% 80% at 40% 20%, #d7e0d8 0%, #8aa090 50%, #2a3832 100%);
+}
+
+.sky[data-mood="night"] {
+  background: radial-gradient(90% 70% at 80% 10%, #3d5a7a 0%, #1a2a3a 46%, #070b12 100%);
+}
+
+.blob {
+  position: absolute;
+  filter: blur(50px);
+  opacity: 0.55;
+  border-radius: 50%;
+  animation: drift 22s ease-in-out infinite alternate;
+}
+
+.blob-a {
+  width: 48vw;
+  height: 48vw;
+  left: -8%;
+  top: -12%;
+  background: #e0a45a;
+}
+
+.blob-b {
+  width: 42vw;
+  height: 42vw;
+  right: -10%;
+  bottom: -18%;
+  background: #3ecfb8;
+  animation-delay: -8s;
+}
+
+.sky[data-mood="rain"] .blob-a,
+.sky[data-mood="storm"] .blob-a {
+  background: #4f6d7a;
+}
+
+.sky[data-mood="night"] .blob-a {
+  background: #c56a3a;
+  opacity: 0.28;
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.14;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+
+.rain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    115deg,
+    transparent 0 14px,
+    rgba(227, 243, 234, 0.18) 15px,
+    transparent 16px
+  );
+  animation: rain 0.7s linear infinite;
+  opacity: 0;
+}
+
+.sky[data-mood="rain"] .rain,
+.sky[data-mood="storm"] .rain {
+  opacity: 0.22;
+}
+
+.glass-panel {
+  background: rgba(244, 248, 244, 0.1);
+  border: 1px solid rgba(244, 248, 244, 0.16);
+  backdrop-filter: blur(18px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.halo-node {
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.halo-node:hover,
+.halo-node:focus-visible {
+  transform: scale(1.08);
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(6%, 8%, 0) scale(1.08);
+  }
+}
+
+@keyframes rain {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 40px 80px;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+}
+
+.pulse-ring {
+  animation: pulse-ring 2.4s ease-out infinite;
+}
+
+:focus-visible {
+  outline: 2px solid #e0a45a;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob,
+  .rain,
+  .pulse-ring,
+  .halo-node {
+    animation: none;
+    transition: none;
+  }
+}
